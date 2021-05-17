@@ -4,12 +4,21 @@ import User from '../models/user.entity.js';
 
 export const signin = async(req,res) =>{
     const {username, email, password} = req.body;
-
+    const flag = email?true:false;
+    let accountHolder = null;
     try{
-        const accountHolder = await User.findOne({username});
-       
+        if(flag){
+        accountHolder = await User.findOne({email})
+    
+        }
+        
+        else{
+        accountHolder = await User.findOne({username}) ;}
+    
         if(!accountHolder) {
+            alert('no such user')
             return res.status(400).json({message:'invalid username or password'})
+            
         }
         const passwordCheck = await bcrypt.compare(password, accountHolder.password)
         

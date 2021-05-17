@@ -39,10 +39,10 @@ const Navbar = () => {
         <Typography component = {Link} to = "/" className={classes.heading} variant="h2" align="center"> Minesweeper </Typography>
         </div>
         <Toolbar className={classes.toolbar}>
-        {user&& user.result.username?  (
+        {user&& user.result.firstName?  (
           <div className={classes.profile}>
-            <Avatar className={classes.purple} alt={user?.result.name} >{user?.result.username.charAt(0)}</Avatar>
-            <Typography className={classes.userName} variant="h6">{user?.result.username}</Typography>
+            <Avatar className={classes.purple} alt={user?.result.name} >{user?.result.firstName.charAt(0)}</Avatar>
+            <Typography className={classes.userName} variant="h6">Welcome {user?.result.firstName} !</Typography>
             <Button variant="contained" className ={classes.logout} color="secondary" onClick={logout}>Logout</Button>
           </div>
         ) : (

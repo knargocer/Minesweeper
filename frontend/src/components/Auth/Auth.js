@@ -23,18 +23,15 @@ const Auth = ()=> {
       e.preventDefault();
       if(signUpFlag){
           dispatch(signUp(formIn,history ))
-          console.log('sdkjSFH')
       }
       else{
         dispatch(signIn(formIn,history ))
-        console.log('sdkjSFH')
       }
 
 
     };
     const handleChange = (e) => {
       setFormIn({...formIn, [e.target.name]: e.target.value});
-      console.log(formIn)
     };
 
 
@@ -54,16 +51,18 @@ const Auth = ()=> {
             signUpFlag?  (
             <>
             
-            <Input name='username' label='Username' handleChange={handleChange} sm={12} />
-            <Input name='firstName' label='First Name' handleChange={handleChange} sm = {6} />
-            <Input name='lastName' label='Last Name' handleChange={handleChange} sm = {6} />
-            <Input name='email' label='Email Address' handleChange={handleChange} type='email' />
-            <Input name='password' label='Password' handleChange={handleChange} type= 'password' />
+            <Input name='username' label='Username' handleChange={handleChange} sm={12}  required = {true}/>
+            <Input name='firstName' label='First Name' handleChange={handleChange} sm = {6}  required = {true}/>
+            <Input name='lastName' label='Last Name' handleChange={handleChange} sm = {6}  required = {true} />
+            <Input name='email' label='Email Address' handleChange={handleChange} type='email'  required = {true}/>
+            <Input name='password' label='Password' handleChange={handleChange} type= 'password' required = {true} />
             </>
             ):(
                 <>
-            <Input name='username' label='Username' handleChange={handleChange} />
-            <Input name='password' label='Password' handleChange={handleChange} type={'password'} />
+            <Input name='username' label='Username' handleChange={handleChange} required = {false} />
+            <Typography variant="h7">or</Typography>
+            <Input name='email' label='Email Address' handleChange={handleChange} type='email' required = {false} />
+            <Input name='password' label='Password' handleChange={handleChange} type='password' />
             </>
             )}
           </Grid>

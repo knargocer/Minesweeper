@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors'
 import userRoutes from './routes/users.js';
+import gameRoutes from './routes/game.js';
 
 const app = express();
 
@@ -12,7 +13,7 @@ app.use(cors())
 
 
 app.use('/users', userRoutes);
-
+app.use('/game',gameRoutes);
 
 
 const CONNECTION_URL = 'mongodb+srv://knargocer:34142@cluster0.nykl0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
