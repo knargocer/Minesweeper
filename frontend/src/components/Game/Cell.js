@@ -28,7 +28,6 @@ export default function Cell({ data, updateBoard, flagCell, countFlag }) {
     if (data.flagged) {
       return;
     }
-    console.log(e.type);
     updateBoard(data.x, data.y);
   };
 

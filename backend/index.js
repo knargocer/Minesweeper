@@ -13,7 +13,7 @@ app.use(cors())
 
 
 app.use('/users', userRoutes);
-app.use('/game',gameRoutes);
+app.use('/games',gameRoutes);
 
 
 const CONNECTION_URL = 'mongodb+srv://knargocer:34142@cluster0.nykl0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'

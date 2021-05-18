@@ -138,7 +138,6 @@ export const shown = (arr, x, y, newNonMinesCount) => {
       //Bottom Reveal
       arr[tile.x][tile.y + 1].shown = true;
       newNonMinesCount--;
-      console.log(toOpen)
     }
 
     if (

@@ -22,6 +22,12 @@ const userSchema  = new Schema({
         type: String,
         required: true
     },
+    gameCount:{
+        type:Number
+    },
+    gameWon:{
+        type:Number
+    },
     id:{
         type: String        
     }

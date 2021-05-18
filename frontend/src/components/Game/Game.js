@@ -5,8 +5,32 @@ import Timer from "./Timer";
 import Cell from "./Cell";
 import { Container, Grid, Typography } from '@material-ui/core';
 import Modal from "./Modal";
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import { makeStyles } from '@material-ui/core/styles';
+import { Button } from "@material-ui/core";
+import Select from '@material-ui/core/Select';
+import {makeGame,getGames} from '../../actions/game';
 
 export default function Game(difficulty) {
+
+  const useStyles = makeStyles((theme) => ({
+    formControl: {
+      padding :theme.spacing(1),
+      minWidth: 120,
+      border: "1px solid purple",
+      borderRadius: "5%",
+      backgroundColor: 'white',
+    },
+    
+  }));
+
+  // const games = useSelector((state)=>state.games);
+  // console.log(games);
+  const classes = useStyles();
   const [board, setBoard] = useState([]);
   const [mineLocations, setMineLocations] = useState([]);
   const [nonMinesCount, setNonMinesCount] = useState(0);
@@ -15,8 +39,14 @@ export default function Game(difficulty) {
   const [gameOver, setGameOver] = useState(false);
   const [restart, setRestart] = useState(false);
   const [newTime, setTime] = useState(0);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const [data, setData] = useState(difficulty);
   const [gameWon,setGameWon] = useState(false);
+  const [gameData,setGameData] = useState({player_username:user.username, difficulty:difficulty, score:newTime})
+  const[open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const history  = useHistory();
+
   
   const generateBoard = () => {
     let x ;
@@ -78,6 +108,11 @@ export default function Game(difficulty) {
       }
       setGameOver(true);
       alert('game over jana <3!')
+      if(gameOver||gameWon){
+        dispatch(makeGame(gameData))
+        // const gameData = {'player_username': {JSON.parse(localStorage.getItem('profile')}, 'difficulty': data  }
+        // dispatch(playGame(gameData,history ))
+      }
     } else {
    
       newBoardValues = shown(newBoardValues, x, y, newNonMinesCount);
@@ -103,6 +138,15 @@ export default function Game(difficulty) {
     setBoard(newBoardValues);
   };
 
+  const handleChange = (e) =>{
+    setData(e.target.value);
+    generateBoard()
+  }
+  const refreshPage= ()=> {
+    window.location.reload(false);
+  }
+
+
 
   return (
     <div
@@ -123,22 +167,39 @@ export default function Game(difficulty) {
     </div>
       </>:<></>}
       <Container >
-      {/* <div
-      style={{
-        background: "rgb(94,3,206)",
-        padding: "10px 0",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center",
-      }}
-    > */}
     <Grid background = {'rgb(94,3,206)'}>
       <Timer gameOver={gameOver} sendTime={setTime} />
-    {/* </div> */}
     <Typography align = 'right' color = "primary" variant="h5">The remaining Mine Count: {mineCount-flaggedCount}</Typography>
     </Grid>
     <Grid>
+        <Grid>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="demo-controlled-open-select-label">Difficulty</InputLabel>
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+              open={open}
+              onClose={(e)=> setOpen(false)}
+              onOpen={(e)=> setOpen(true)}
+              value={difficulty}
+              onChange={handleChange}
+            >
+              <MenuItem value={'Easy'}>Easy</MenuItem>
+              <MenuItem value={'Medium'}>Medium</MenuItem>
+              <MenuItem value={'Hard'}>Hard</MenuItem>
+            </Select>
+        </FormControl> 
+        </Grid>
+        <Grid>
+        <Grid container align="center" justify= 'space-evenly'>
+          <Button variant='contained' color='primary' onClick={() => setRestart()}>
+            RESTART
+          </Button>
+      
+          <Button variant='contained' color='primary'onClick={refreshPage}> Quit </Button>
+          </Grid>
+        </Grid>
+
       {board.map((row, i) => {
         return (
           <div style={{ display: "flex" }} key={i}>

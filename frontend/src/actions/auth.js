@@ -2,6 +2,7 @@ import {AUTH} from '../commons/actionTypes';
 import * as api from '../api/index.js';
 
 
+//to use the async
 export const signIn = (formIn, history) => async (dispatch)=>{
     try {
         const { data } = await api.signIn(formIn);
@@ -11,8 +12,6 @@ export const signIn = (formIn, history) => async (dispatch)=>{
         console.log(error);
       }    
 } 
-
-
 
 export const signUp = (formIn, history) => async (dispatch)=>{
     try {

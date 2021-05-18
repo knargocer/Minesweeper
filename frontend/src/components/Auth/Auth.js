@@ -22,6 +22,7 @@ const Auth = ()=> {
     const handleSubmit = (e) => {
       e.preventDefault();
       if(signUpFlag){
+        console.log(formIn)
           dispatch(signUp(formIn,history ))
       }
       else{
