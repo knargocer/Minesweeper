@@ -2,7 +2,8 @@ import React from 'react';
 import FlagIcon from '@material-ui/icons/Flag';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 
-export default function Cell({ data, updateBoard, flagCell }) {
+export default function Cell({ data, updateBoard, flagCell, countFlag }) {
+
   const style = {
     block: {
       width: 40,
@@ -33,6 +34,7 @@ export default function Cell({ data, updateBoard, flagCell }) {
 
   const onClickFlag = (e) => {
     e.preventDefault();
+    
     flagCell(data.x, data.y);
   };
 
@@ -42,7 +44,7 @@ export default function Cell({ data, updateBoard, flagCell }) {
       onClick={(e) => onClickUpdate(e)}
       onContextMenu={(e) => onClickFlag(e)}
     >
-      {data.flagged && !data.shown ? (
+      {data.flagged && !data.shown? (
         <FlagIcon />
       ) : data.shown && data.value !== 0 ? (
         data.value === 'X' ? (

@@ -1,14 +1,20 @@
 import { Button } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
+import { Grid, Typography } from '@material-ui/core'; 
+
+
 
 export default function Modal({ reset, completeTime }) {
-  
   const [render, setRender] = useState(false);
   useEffect(() => {
     setTimeout(() => {
       setRender(true);
     }, 1000);
   }, []);
+
+  const refreshPage= ()=> {
+    window.location.reload(false);
+  }
 
   return (
     <div
@@ -20,10 +26,13 @@ export default function Modal({ reset, completeTime }) {
         background: "rgba(0,0,0,0.3)",
       }}
     >
-      <div id="gameOverImage"></div>
-      <Button variant='contained' color='secondary' onClick={() => reset()} >
-        restart
+    <Grid container align="center" justify= 'space-evenly'>
+      <Button variant='contained' color='secondary' onClick={() => reset()}>
+        RESTART
       </Button>
+   
+      <Button variant='contained' color='secondary'onClick={refreshPage}> Quit </Button>
+      </Grid>
     </div>
   );
 }

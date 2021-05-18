@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import createBoard from "./util/createboard";
 import { shown } from "./util/show";
 import Timer from "./Timer";
-import Modal from "./Modal";
 import Cell from "./Cell";
-
+import { Container, Grid, Typography } from '@material-ui/core';
+import Modal from "./Modal";
 
 export default function Game(difficulty) {
   const [board, setBoard] = useState([]);
   const [mineLocations, setMineLocations] = useState([]);
   const [nonMinesCount, setNonMinesCount] = useState(0);
+  const [mineCount,setMineCount]=useState(0);
   const [flaggedCount, setflaggedCount] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [restart, setRestart] = useState(false);
@@ -20,23 +21,25 @@ export default function Game(difficulty) {
   const generateBoard = () => {
     let x ;
     let y ;
-    let mineCount;
-    if(data.prop === 'Easy'){
+    let mines;
+    let check = data.prop?data.prop:data; 
+    if(check === 'Easy'){
         x = 9;
         y = 9;
-        mineCount = 10;
+        mines = 10;
     }
-    if(data.prop === 'Medium'){
+    if(check === 'Medium'){
       x = 16;
       y = 16;
-      mineCount = 40;
+      mines = 40;
     }
-    if(data.prop === 'Hard'){
+    if(check === 'Hard'){
       x = 30;
       y = 36;
-      mineCount = 99;
+      mines = 99;
    }
-    const makeBoard = createBoard(x, y,mineCount , setMineLocations);
+   setMineCount(mines)
+    const makeBoard = createBoard(x, y,mines , setMineLocations);
     setNonMinesCount(x*y - mineCount);
     setTime(0);
     setBoard(makeBoard.board);
@@ -47,7 +50,7 @@ export default function Game(difficulty) {
 
   };
   useEffect(() => {
-    setData(difficulty.prop.prop)
+    setData(difficulty.prop)
     generateBoard();
   }, [restart, setRestart]);
 
@@ -56,8 +59,10 @@ export default function Game(difficulty) {
   const updateBoard = (x, y, e) => {
     let newBoardValues = JSON.parse(JSON.stringify(board));
     let newNonMinesCount = nonMinesCount;
-    if(newNonMinesCount === 0){
+    if(newNonMinesCount === 1){
       setGameWon(true)
+      alert("YOU WINNNN!!!!!")
+      window.location.reload(false);
     }
     if (newBoardValues[x][y].value === "X") {
       for (let i = 0; i < mineLocations.length; i++) {
@@ -72,6 +77,7 @@ export default function Game(difficulty) {
        }
       }
       setGameOver(true);
+      alert('game over jana <3!')
     } else {
    
       newBoardValues = shown(newBoardValues, x, y, newNonMinesCount);
@@ -86,16 +92,38 @@ export default function Game(difficulty) {
   const flagCell = (x, y) => {
     let newBoardValues = JSON.parse(JSON.stringify(board));
     newBoardValues[x][y].flagged = !newBoardValues[x][y].flagged;
-    console.log(newBoardValues[x][y].flagged)
+    if(newBoardValues[x][y].flagged){
+        const count =  flaggedCount+1;
+        setflaggedCount(count)
+    }
+    else{
+      const count =  flaggedCount- 1;
+      setflaggedCount(count)
+    }
     setBoard(newBoardValues);
   };
+
 
   return (
     <div
       style={{ boxShadow: "0 4px 3px rgba(0,0,0,0.1)", position: "relative" }}
     >
-      {(gameOver || gameWon) && <Modal reset={setRestart} completeTime={newTime} />}
-      <div
+      {(gameOver || gameWon)?<>
+     {/*if we need to show some modal  */}
+        <div
+        style={{
+        height: "100%",
+        width: "100%",
+        position: "absolute",
+        background: "rgba(0,0,0,0.3)",
+      }}
+    >
+      <div id="gameOverImage"></div>
+      <Modal reset={setRestart} completeTime={newTime} />
+    </div>
+      </>:<></>}
+      <Container >
+      {/* <div
       style={{
         background: "rgb(94,3,206)",
         padding: "10px 0",
@@ -104,9 +132,13 @@ export default function Game(difficulty) {
         justifyContent: "space-around",
         alignItems: "center",
       }}
-    >
+    > */}
+    <Grid background = {'rgb(94,3,206)'}>
       <Timer gameOver={gameOver} sendTime={setTime} />
-    </div>
+    {/* </div> */}
+    <Typography align = 'right' color = "primary" variant="h5">The remaining Mine Count: {mineCount-flaggedCount}</Typography>
+    </Grid>
+    <Grid>
       {board.map((row, i) => {
         return (
           <div style={{ display: "flex" }} key={i}>
@@ -116,8 +148,11 @@ export default function Game(difficulty) {
               );
             })}
           </div>
+          
         );
       })}
+    </Grid>
+    </Container>
     </div>
   );
 }
