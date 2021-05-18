@@ -7,9 +7,9 @@ export const signin = async(req,res) =>{
     const flag = email?true:false;
     let accountHolder = null;
     try{
+        
         if(flag){
         accountHolder = await User.findOne({email})
-    
         }
         
         else{

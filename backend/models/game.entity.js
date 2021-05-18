@@ -15,6 +15,9 @@ const gameSchema  = new Schema({
     id:{
         type: String        
     },
+    difficulty:{
+        type: String
+    }
 });
 
 export default mongoose.model('Game', gameSchema);

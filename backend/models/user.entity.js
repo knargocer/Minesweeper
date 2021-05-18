@@ -24,15 +24,7 @@ const userSchema  = new Schema({
     },
     id:{
         type: String        
-    },
-    scores:{
-        type:Array 
     }
-
-   
-
-
-    
 });
 
 export default mongoose.model('User', userSchema);
