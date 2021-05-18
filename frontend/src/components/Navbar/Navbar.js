@@ -26,7 +26,6 @@ const Navbar = () => {
     if (token) {
       const decodedToken = decode(token);
 
-      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
     }
 
     setUser(JSON.parse(localStorage.getItem('profile')));
@@ -39,7 +38,7 @@ const Navbar = () => {
         <Typography component = {Link} to = "/" className={classes.heading} variant="h2" align="center"> Minesweeper </Typography>
         </div>
         <Toolbar className={classes.toolbar}>
-        {user&& user.result.firstName?  (
+        {user&& user.result.username?  (
           <div className={classes.profile}>
             <Avatar className={classes.purple} alt={user?.result.name} >{user?.result.username.charAt(0)}</Avatar>
             <Typography className={classes.userName} variant="h6">Welcome {user?.result.username} !</Typography>

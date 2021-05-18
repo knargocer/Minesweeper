@@ -22,7 +22,7 @@ export default function UsersTable() {
     const [users, setUsers] = useState([]);
 
     async function fetchUsersFromServer() {
-        const result = await axios.get('http://localhost:5000/users/api').then(res => res);
+        const result = await axios.get('http://localhost:5000/users/').then(res => res);
         console.log(result);
         setUsers(result.data);
     }
