@@ -2,12 +2,14 @@ import { Button } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 
 export default function Modal({ reset, completeTime }) {
+  
   const [render, setRender] = useState(false);
   useEffect(() => {
     setTimeout(() => {
       setRender(true);
     }, 1000);
   }, []);
+
   return (
     <div
       style={{
@@ -20,7 +22,7 @@ export default function Modal({ reset, completeTime }) {
     >
       <div id="gameOverImage"></div>
       <Button variant='contained' color='secondary' onClick={() => reset()} >
-        Restart
+        restart
       </Button>
     </div>
   );

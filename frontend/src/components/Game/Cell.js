@@ -3,7 +3,6 @@ import FlagIcon from '@material-ui/icons/Flag';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 export default function Cell({ data, updateBoard, flagCell }) {
-  console.log(data)
   const style = {
     block: {
       width: 40,
